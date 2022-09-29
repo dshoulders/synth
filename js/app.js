@@ -7,7 +7,8 @@ export const app = ({ state, actions, view }, element) => {
     Object.entries(actions).forEach(([key, actionFn]) => {
       boundActions[key] = (payload) => {
         const newState = actionFn(state, payload);
-        render(view(newState, boundActions), element);
+        Object.assign(state, newState);
+        render(view(state, boundActions), element);
       };
     });
 
