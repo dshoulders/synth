@@ -1,6 +1,6 @@
 import { html } from "https://unpkg.com/lit-html@2.3.1";
 
-export const oscillator = ({ waveform, volume, detune }, index, actions) => {
+export const oscillator = ({ type, volume, detune }, index, actions) => {
   return html`
     <div class="oscillator">
       <input
@@ -9,7 +9,9 @@ export const oscillator = ({ waveform, volume, detune }, index, actions) => {
         min="0"
         max="3"
         step="1"
-        value="${waveform}"
+        value="${type}"
+        @input=${({ target: { value } }) =>
+          actions.oscUpdateType({ index, value })}
       />
       <input
         class="slider-volume"
@@ -26,8 +28,8 @@ export const oscillator = ({ waveform, volume, detune }, index, actions) => {
         max="100"
         step="1"
         value="${detune}"
-        @change=${({ target: { value } }) =>
-          actions.oscUpdateDetune(index, value)}
+        @input=${({ target: { value } }) =>
+          actions.oscUpdateDetune({ index, value })}
       />
     </div>
   `;
